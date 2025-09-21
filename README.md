@@ -1,8 +1,8 @@
  
-DSCE Result Scraper API 🚀
+DSCE Result Scraper API
 A high-performance, asynchronous web scraper and API for fetching student results from the DSCE (Dayananda Sagar College of Engineering) results portal. This project is a Python-based backend built with FastAPI, designed to download and organize result PDFs efficiently.
 
-✨ Key Features
+Key Features
 Asynchronous Scraping: Built with asyncio and httpx to handle multiple network requests efficiently without blocking.
 
 Background Tasks: Long-running scraping jobs for entire branches are handled as background tasks, providing an immediate API response.
@@ -17,7 +17,7 @@ PDF Parsing: Extracts the student's name directly from the PDF content to create
 
 Interactive API Docs: Automatically generates interactive API documentation with Swagger UI.
 
-🛠️ Tech Stack
+Tech Stack
 Backend Framework: Python 3 with FastAPI
 
 Web Server: Uvicorn
@@ -58,14 +58,14 @@ Create a file named .env in the root of the project directory and add the URL fo
 # .env
 RESULT_PORTAL_URL="[http://14.99.184.178:8080/birt/frameset](http://14.99.184.178:8080/birt/frameset)"
 
-▶️ Running the Application
+▶Running the Application
 Once the setup is complete, you can start the API server with Uvicorn.
 
 uvicorn app.main:app --reload
 
 The API will be running and available at http://127.0.0.1:8000.
 
-📖 API Endpoints
+API Endpoints
 You can access the interactive Swagger UI documentation at http://127.0.0.1:8000/docs.
 
 Method

@@ -1,4 +1,4 @@
-# requirements.txt
+# required frameworks/libraries
 fastapi
 uvicorn[standard]
 pydantic

@@ -3,7 +3,7 @@ from typing import Dict, List, Optional
 
 class ScrapeRequest(BaseModel):
     """Request model for starting scraping process"""
-    year: str  # like 24 for 2024
+    year: str  # like - 24 for 2024
     branches: List[str]  # format - ["AI", "CS", "IS"]
 
 class ScrapeStatus(BaseModel):
