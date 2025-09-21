@@ -1,0 +1,8 @@
+# requirements.txt
+fastapi
+uvicorn[standard]
+pydantic
+httpx
+PyPDF2
+aiofiles
+python-dotenv
