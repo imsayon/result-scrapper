@@ -8,16 +8,15 @@ import logging
 from io import BytesIO
 import PyPDF2
 import re
-from dotenv import load_dotenv # <-- 1. IMPORT
+from dotenv import load_dotenv
 
-load_dotenv() # <-- 2. LOAD a .env file from the root directory
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class ResultScraper:
     def __init__(self):
-        # 3. USE the variable from the .env file
         self.base_url = os.getenv("RESULT_PORTAL_URL")
         if not self.base_url:
             raise ValueError("RESULT_PORTAL_URL not found in .env file")
@@ -26,8 +25,6 @@ class ResultScraper:
             "__report": "mydsi/exam/Exam_Result_Sheet_dsce.rptdesign",
             "__format": "pdf"
         }
-        # ... the rest of your code stays the same
-        # Use an async HTTP client
         self.client = httpx.AsyncClient(headers={
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
         }, timeout=30.0)
@@ -123,7 +120,7 @@ class ResultScraper:
                     consecutive_failures += 1
                 
                 student_number += 1
-                await asyncio.sleep(0.1) # Be respectful to the server
+                await asyncio.sleep(0.1)
     
     async def scrape_single_result(self, usn: str) -> Optional[str]:
         student_info = await self.fetch_single_result(usn)

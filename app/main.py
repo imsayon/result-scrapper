@@ -1,4 +1,3 @@
-# app/main.py
 from fastapi import FastAPI, BackgroundTasks, HTTPException
 from typing import List
 import uvicorn
@@ -93,6 +92,5 @@ async def list_results():
                         modified=datetime.fromtimestamp(os.path.getmtime(filepath)).isoformat()
                     ))
                 except IndexError:
-                    # Handle files that don't match the expected naming format
                     continue
     return all_files

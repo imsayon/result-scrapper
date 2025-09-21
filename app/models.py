@@ -3,8 +3,8 @@ from typing import Dict, List, Optional
 
 class ScrapeRequest(BaseModel):
     """Request model for starting scraping process"""
-    year: str  # e.g., "24" for 2024
-    branches: List[str]  # e.g., ["AI", "CS", "IS"]
+    year: str  # like 24 for 2024
+    branches: List[str]  # format - ["AI", "CS", "IS"]
 
 class ScrapeStatus(BaseModel):
     """Response model for scraping status"""
@@ -26,7 +26,6 @@ class ResultFile(BaseModel):
     size_kb: float
     modified: str
 
-# Available branch codes from your Node.js version
 AVAILABLE_BRANCHES = [
     "AE", "AI", "AU", "BT", "CB", "CD", "CG", "CH", "CS", "CV", 
     "CY", "EC", "EE", "EI", "ET", "IC", "IS", "MD", "ME", "RI"
