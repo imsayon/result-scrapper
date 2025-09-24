@@ -1,4 +1,4 @@
-from fastapi import FastAPI, BackgroundTasks, HTTPException
+from fastapi import FastAPI, HTTPException
 from typing import List
 import uvicorn
 import os
@@ -21,13 +21,13 @@ def update_progress(current: int, total: int, message: str):
     scrape_status.total = total
     scrape_status.message = message
 
-async def run_scraping_task(year: str, branches: list):
+def run_scraping_task(year: str, branches: list):
     try:
         scrape_status.is_running = True
         scrape_status.message = f"Starting scraping for year 20{year}..."
         scrape_status.progress = 0
         
-        await scraper.scrape_all_results(year, branches, update_progress)
+        scraper.scrape_all_results(year, branches, update_progress)
         
         scrape_status.message = "Scraping completed!"
     except Exception as e:
@@ -36,30 +36,30 @@ async def run_scraping_task(year: str, branches: list):
         scrape_status.is_running = False
 
 @app.get("/")
-async def root():
+def root():
     return {"message": "DSCE Result Scraper API is running"}
 
 @app.get("/status", response_model=ScrapeStatus)
-async def get_status():
+def get_status():
     return scrape_status
 
 @app.post("/scrape")
-async def start_scraping(request: ScrapeRequest, background_tasks: BackgroundTasks):
+def start_scraping(request: ScrapeRequest):
     if scrape_status.is_running:
         raise HTTPException(status_code=400, detail="Scraping is already in progress.")
 
     if not re.match(r'^\d{2}$', request.year):
         raise HTTPException(status_code=422, detail="Invalid year format. Use a 2-digit format, e.g., '23' for 2023.")
 
-    background_tasks.add_task(run_scraping_task, request.year, request.branches)
-    return {"message": "Scraping process started in the background."}
+    run_scraping_task(request.year, request.branches)
+    return {"message": "Scraping process completed."}
 
 @app.post("/scrape-single")
-async def scrape_single_usn(usn: str):
+def scrape_single_usn(usn: str):
     if scrape_status.is_running:
         raise HTTPException(status_code=400, detail="Scraping is already in progress.")
     try:
-        file_path = await scraper.scrape_single_result(usn)
+        file_path = scraper.scrape_single_result(usn)
         if file_path:
             return {"usn": usn, "status": "success", "file_path": file_path}
         else:
@@ -68,7 +68,7 @@ async def scrape_single_usn(usn: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/results", response_model=list[ResultFile])
-async def list_results():
+def list_results():
     all_files = []
     root_dir = "downloads"
     if not os.path.exists(root_dir):

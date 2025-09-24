@@ -1,8 +1,6 @@
-# required frameworks/libraries
 fastapi
 uvicorn[standard]
 pydantic
-httpx
+requests
 PyPDF2
-aiofiles
 python-dotenv
